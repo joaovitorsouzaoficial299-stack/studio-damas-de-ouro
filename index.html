@@ -252,6 +252,29 @@
 @keyframes sessionReveal{from{opacity:.6;transform:scale(1.035)}to{opacity:1;transform:scale(1)}}
 @media(max-width:760px){.session-showcase{padding:0 0 62px}.session-frame{padding:9px;border-radius:23px}.session-frame:before,.session-frame:after{display:none}.session-photo{width:100%;height:auto;border-radius:17px}}
 @media(prefers-reduced-motion:reduce){.session-frame.reveal.show .session-photo{animation:none}}
+</style><style id="header-compact-2026">
+/* Emblema circular com a marca inteira visível */
+.site-header{background:rgba(9,8,8,.92);border-bottom:1px solid rgba(214,178,122,.15)}
+.site-header .nav{max-width:1120px;min-height:106px;gap:22px}
+.site-header .brand{width:116px;height:116px;flex:0 0 116px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(214,178,122,.30);background:#050505;border-radius:50%;padding:12px;overflow:hidden;box-shadow:0 4px 22px rgba(0,0,0,.18)}
+.site-header .brand img{width:100%;height:100%;max-width:100%;object-fit:contain;object-position:center;filter:none}
+.site-header .nav-links{gap:clamp(10px,1.25vw,19px);flex-wrap:nowrap;font-size:10px;letter-spacing:.075em;white-space:nowrap}
+.site-header .nav-links .nav-btn{padding:12px 17px;min-height:39px;font-size:10px}
+@media(max-width:1160px){
+.site-header .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:rgba(9,8,7,.98);padding:20px 24px;flex-direction:column;gap:8px;align-items:stretch;white-space:normal;max-height:calc(100dvh - 94px);overflow-y:auto}
+.site-header .nav-links.open{display:flex}
+.site-header .nav-links a{display:block;padding:13px 15px;border:1px solid rgba(214,178,122,.10);border-radius:12px;background:rgba(214,178,122,.04)}
+.site-header .nav-links .nav-btn{display:flex}
+.site-header .menu-btn{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px}
+.site-header .nav{min-height:94px}
+.site-header .brand{width:88px;height:88px;flex-basis:88px;padding:8px}
+}
+@media(max-width:760px){
+.site-header .nav{min-height:83px}
+.site-header .brand{width:78px;height:78px;flex-basis:78px;padding:7px}
+.site-header .menu-btn{width:43px;height:43px;font-size:21px}
+.site-header .nav-links{max-height:calc(100dvh - 83px)}
+}
 </style></head>
 <body>
   <header class="site-header">
