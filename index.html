@@ -312,6 +312,24 @@
 .site-header .menu-btn{width:36px!important;height:36px!important;font-size:18px!important}
 .site-header .nav-links{max-height:calc(100dvh - 62px)!important}
 }
+</style><style id="damas-all-sections-fade">
+/* Transições contínuas: evita divisões retas sem desfocar fotografias nem textos. */
+main > section{position:relative;isolation:isolate}
+main > section:not(.hero)::before,
+main > section:not(.hero)::after{
+content:"";position:absolute;left:0;right:0;pointer-events:none;z-index:0;
+height:clamp(68px,12vw,150px)
+}
+main > section:not(.hero)::before{top:-1px;background:linear-gradient(to bottom,#080707 0%,rgba(8,7,7,.76) 27%,rgba(8,7,7,0) 100%)}
+main > section:not(.hero)::after{bottom:-1px;background:linear-gradient(to top,#080707 0%,rgba(8,7,7,.68) 24%,rgba(8,7,7,0) 100%)}
+main > section:not(.hero)> .wrap{position:relative;z-index:1}
+main > section.hero::after{height:clamp(130px,22vw,280px)!important;background:linear-gradient(to bottom,transparent 0%,rgba(8,7,7,.52) 50%,#080707 100%)!important}
+main > section.session-showcase{background:linear-gradient(180deg,#080707 0%,#15100d 48%,#080707 100%)}
+footer.footer{position:relative;background:linear-gradient(to bottom,#080707,#0b0908);border-top:0}
+@media(max-width:760px){
+main > section:not(.hero)::before,main > section:not(.hero)::after{height:72px}
+main > section.hero::after{height:150px!important}
+}
 </style></head>
 <body>
   <header class="site-header">
