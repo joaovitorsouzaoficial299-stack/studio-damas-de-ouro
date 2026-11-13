@@ -226,6 +226,22 @@
 .floating-wa .wa-icon{width:31px!important;height:31px!important;display:block!important;fill:#fff!important}
 @keyframes whatsappGreenPulse{0%,100%{transform:scale(1);box-shadow:0 8px 20px rgba(37,211,102,.28)}50%{transform:scale(1.06);box-shadow:0 8px 34px rgba(37,211,102,.58)}}
 @media(prefers-reduced-motion:reduce){.floating-wa{animation:none!important}}
+</style><style id="service-picker-visuals">
+.option-btn.option-photo{display:flex;align-items:center;gap:15px;padding:10px;min-height:116px}
+.service-thumb{display:block;width:94px;height:94px;border-radius:14px;object-fit:cover;object-position:center 40%;flex:0 0 94px;background:#221a14;border:1px solid rgba(214,178,122,.19)}
+.option-copy{display:block;flex:1;min-width:0}
+.option-copy strong{display:block;font-size:16px;line-height:1.35;font-weight:600;letter-spacing:0}
+.option-btn .option-copy small{display:block;margin-top:6px;line-height:1.5;color:var(--muted);font-size:12px}
+.option-check{display:inline-flex;align-items:center;justify-content:center;flex:0 0 24px;width:24px;height:24px;border-radius:50%;background:#cda66c;color:#130f0a;font-weight:800;font-size:14px;opacity:0;transform:scale(.7);transition:opacity .2s ease,transform .2s ease}
+.option-btn.active .option-check{opacity:1;transform:scale(1)}
+.option-other{display:flex;align-items:center;gap:12px}
+.custom-service{margin-top:14px;padding:14px;border-radius:18px;border:1px solid var(--line);background:#100d0a}
+.custom-service[hidden]{display:none}
+.custom-service label{display:block;color:#e7cfaa;font-size:13px;margin-bottom:10px}
+.custom-service textarea{display:block;resize:vertical;min-height:84px;width:100%;background:#090807;border:1px solid rgba(214,178,122,.24);border-radius:13px;padding:12px;color:var(--text);font:inherit;outline:none}
+.custom-service textarea:focus{border-color:var(--gold)}
+.custom-service small{display:block;margin-top:8px;color:var(--muted);font-size:12px;line-height:1.5}
+@media(max-width:420px){.option-btn.option-photo{gap:10px}.service-thumb{width:78px;height:88px;flex-basis:78px}.option-copy strong{font-size:14px}.option-btn .option-copy small{font-size:11px}.option-check{flex-basis:21px;width:21px;height:21px}}
 </style></head>
 <body>
   <header class="site-header">
@@ -309,9 +325,25 @@
             <h3 class="flow-question">O que você gostaria de fazer?</h3>
             <p class="flow-description">Escolha o procedimento que você quer.</p>
             <div class="option-grid" id="serviceOptions">
-              <button class="option-btn" type="button" data-value="Design de sobrancelhas">Design de sobrancelhas<small>Realce natural e harmonioso</small></button>
-              <button class="option-btn" type="button" data-value="Volume brasileiro brow">Volume brasileiro brow<small>Resultado mais marcante e elegante</small></button>
-              <button class="option-btn" type="button" data-value="Outro procedimento">Outro procedimento<small>Conversar diretamente com o estúdio</small></button>
+              <button class="option-btn option-photo" type="button" data-value="Design de sobrancelhas" aria-pressed="false">
+                <img class="service-thumb" data-service-example="antes" alt="Sobrancelhas naturais, referência para design de sobrancelhas" loading="lazy">
+                <span class="option-copy"><strong>Design de sobrancelhas</strong><small>Para valorizar o formato natural das suas sobrancelhas.</small></span>
+                <span class="option-check" aria-hidden="true">✓</span>
+              </button>
+              <button class="option-btn option-photo" type="button" data-value="Volume brasileiro brow" aria-pressed="false">
+                <img class="service-thumb" data-service-example="depois" alt="Olhar com cílios mais volumosos, exemplo do volume brasileiro" loading="lazy">
+                <span class="option-copy"><strong>Volume brasileiro brow</strong><small>Para quem gosta de um olhar com mais destaque.</small></span>
+                <span class="option-check" aria-hidden="true">✓</span>
+              </button>
+              <button class="option-btn option-other" type="button" data-value="Outro procedimento" aria-pressed="false">
+                <span class="option-copy"><strong>Outro procedimento</strong><small>Quer algo diferente? Escolha esta opção e conte o que você procura.</small></span>
+                <span class="option-check" aria-hidden="true">✓</span>
+              </button>
+            </div>
+            <div id="customServiceWrap" class="custom-service" hidden>
+              <label for="customServiceText">Conte pra gente o que você gostaria de fazer</label>
+              <textarea id="customServiceText" maxlength="220" rows="3" placeholder="Ex.: queria saber se vocês fazem outro tipo de procedimento..."></textarea>
+              <small>Essa mensagem vai junto no WhatsApp para o estúdio.</small>
             </div>
             <div class="flow-actions">
               <button class="mini-btn" type="button" data-back>Voltar</button>
@@ -432,6 +464,18 @@
       reveals.forEach((element) => element.classList.add('show'));
     }
 
+
+// Usamos as fotos já presentes no próprio site, evitando caminhos quebrados.
+const exampleImages=document.querySelectorAll('.compare-card figure img');
+const servicePhotoBefore=exampleImages[0]?.getAttribute('src');
+const servicePhotoAfter=exampleImages[1]?.getAttribute('src');
+document.querySelectorAll('[data-service-example]').forEach(img=>{
+  const src=img.dataset.serviceExample==='antes'?servicePhotoBefore:servicePhotoAfter;
+  if(src) img.src=src;
+});
+const customServiceWrap=document.getElementById('customServiceWrap');
+const customServiceText=document.getElementById('customServiceText');
+
     const state = { nome:'', servico:'', dia:'', hora:'' };
     const stages = Array.from(document.querySelectorAll('.flow-stage'));
     let currentStep = 0;
@@ -466,15 +510,18 @@
 
     document.querySelectorAll('#serviceOptions .option-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('#serviceOptions .option-btn').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('#serviceOptions .option-btn').forEach(el => {el.classList.remove('active');el.setAttribute('aria-pressed','false')});
         btn.classList.add('active');
+        btn.setAttribute('aria-pressed','true');
         state.servico = btn.dataset.value;
+        customServiceWrap.hidden = state.servico !== 'Outro procedimento';
         updateSummary();
       });
     });
 
     document.getElementById('nextServico').addEventListener('click', () => {
       if (!state.servico) return;
+      if (state.servico === 'Outro procedimento' && !customServiceText.value.trim()) {customServiceText.focus();return;}
       showStep(2);
     });
 
