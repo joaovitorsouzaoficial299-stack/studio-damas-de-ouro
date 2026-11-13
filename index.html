@@ -542,7 +542,7 @@ const customServiceText=document.getElementById('customServiceText');
     document.getElementById('sendWhatsapp').addEventListener('click', () => {
       const message = `Olá! Meu nome é ${state.nome}. Gostaria de agendar um horário no Studio Damas de Ouro.
 
-Procedimento: ${state.servico}
+Procedimento: ${state.servico}${state.servico === 'Outro procedimento' ? '\nDetalhes: ' + customServiceText.value.trim() : ''}
 Dia desejado: ${formatDate(state.dia)}
 Horário desejado: ${state.hora}
 
