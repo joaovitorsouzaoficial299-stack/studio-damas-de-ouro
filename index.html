@@ -275,6 +275,21 @@
 .site-header .menu-btn{width:43px;height:43px;font-size:21px}
 .site-header .nav-links{max-height:calc(100dvh - 83px)}
 }
+</style><style id="expo-glass-and-fade">
+/* Superfícies vítreas com reflexo e profundidade, preservando o verde do WhatsApp */
+:where(.cta,.nav-btn,.mini-btn,.option-btn,.menu-btn,.flow-chip,.floating-wa){position:relative;isolation:isolate;overflow:hidden;backdrop-filter:blur(17px) saturate(1.5);-webkit-backdrop-filter:blur(17px) saturate(1.5);border:1px solid rgba(255,236,197,.27);box-shadow:inset 0 1px 0 rgba(255,255,255,.27),inset 0 -1px 0 rgba(255,255,255,.04),0 10px 28px rgba(0,0,0,.22);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+:where(.cta,.nav-btn,.mini-btn,.option-btn,.menu-btn,.flow-chip,.floating-wa)::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(155deg,rgba(255,255,255,.23) 0%,rgba(255,255,255,.06) 33%,transparent 66%);opacity:.72;z-index:-1}
+:where(.cta,.nav-btn,.mini-btn,.option-btn,.menu-btn):hover{transform:translateY(-2px);border-color:rgba(255,232,190,.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.38),0 14px 32px rgba(0,0,0,.32)}
+.cta{background:linear-gradient(120deg,rgba(214,178,122,.84),rgba(231,201,155,.72));color:#17120b}
+.cta.outline,.mini-btn,.nav-btn,.menu-btn{background:rgba(255,255,255,.07);color:#f8f0e5}
+.option-btn{background:rgba(255,255,255,.065)}
+.option-btn.active{background:linear-gradient(110deg,rgba(214,178,122,.24),rgba(255,255,255,.07));border-color:rgba(214,178,122,.72)}
+.floating-wa{background:rgba(37,211,102,.88)!important;color:white!important}
+.hero{position:relative;isolation:isolate}
+.hero::after{content:"";pointer-events:none;position:absolute;left:0;right:0;bottom:-1px;height:clamp(140px,25vh,330px);background:linear-gradient(to bottom,rgba(8,7,7,0),rgba(8,7,7,.7) 63%,#080707 100%);z-index:0}
+.hero .hero-grid{position:relative;z-index:1}
+#sobre{background:linear-gradient(to bottom,#080707,#0b0908 240px)}
+@media(prefers-reduced-motion:reduce){:where(.cta,.nav-btn,.mini-btn,.option-btn,.menu-btn){transition:none}}
 </style></head>
 <body>
   <header class="site-header">
@@ -367,12 +382,12 @@
             <p class="flow-description">Escolha o procedimento que você quer.</p>
             <div class="option-grid" id="serviceOptions">
               <button class="option-btn option-photo" type="button" data-value="Design de sobrancelhas" aria-pressed="false">
-                <img class="service-thumb" data-service-example="antes" alt="Sobrancelhas naturais, referência para design de sobrancelhas" loading="lazy">
+                <img class="service-thumb" data-service-example="antes" alt="Imagem ilustrativa de procedimento profissional de design de sobrancelhas" loading="lazy">
                 <span class="option-copy"><strong>Design de sobrancelhas</strong><small>Para valorizar o formato natural das suas sobrancelhas.</small></span>
                 <span class="option-check" aria-hidden="true">✓</span>
               </button>
               <button class="option-btn option-photo" type="button" data-value="Volume brasileiro brow" aria-pressed="false">
-                <img class="service-thumb" data-service-example="depois" alt="Olhar com cílios mais volumosos, exemplo do volume brasileiro" loading="lazy">
+                <img class="service-thumb" data-service-example="depois" alt="Imagem ilustrativa de olhar com sobrancelhas marcadas e cílios destacados" loading="lazy">
                 <span class="option-copy"><strong>Volume brasileiro brow</strong><small>Para quem gosta de um olhar com mais destaque.</small></span>
                 <span class="option-check" aria-hidden="true">✓</span>
               </button>
@@ -507,12 +522,10 @@
 
 
 // Usamos as fotos já presentes no próprio site, evitando caminhos quebrados.
-const exampleImages=document.querySelectorAll('.compare-card figure img');
-const servicePhotoBefore=exampleImages[0]?.getAttribute('src');
-const servicePhotoAfter=exampleImages[1]?.getAttribute('src');
+const serviceImageDesign="data:image/webp;base64,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";
+const serviceImageVolume="data:image/webp;base64,UklGRrAHAABXRUJQVlA4IKQHAABwNgCdASqWAJYAPslUpE0npCMordJM6RAZCUAYVo7rUyt2wylCkfhn3jIfjIfZO1kCQSKxfK2MshtWK4ByXVoFt47YxBdIQNG9rQE9hk/Bae9rFKT6iZxDzY0+1AyKFOEsQh6C83/mb4vUslVV9vRR1DKkkxgSrEfnmuKh4II0whnQJZrCvtDRTrDwsB/g1QqCo4az27BtQrn1r2hsEObGDv+w8e2rIe+GAeCCk+6HTp/1Qwasnq7j/GhL9o7yumETlEti8NLBoL76yqcZfGfIOgDXwj8/piwtXBH1Xyv4cFQ23NYmQBvExw3rOI/H3G8dNfn4Ursp6OtSOIvM5SzlAITS2VtqvQlHWwAeNjSUK8bpkSp7ajzzNFbijNhw39hCAEyVmTOxdCjfeaaUqFlYVrh0Vn6g20u4od80vl+Ind4vLV8+b8BVJ8OqBypxr/XzbUBrY0+xvlAORdRIurMb1bOxKSJfMO/0Z/dc2s71z8IoA1NPqU8+hbuCKGjGbIK34o6P+zRX+nDoL+GTmqWjrcwMtqE4iWFz9Xa999x20QZEP/uVhYdqfWGqvbz161DFCzP5zY3TteeW8gAA/vfvDAUIRENt6q9EOsvEbeogxe1MWCYXi+UXD+fPm5WN1NR3WKD1Wqg4Zo1m7krr1b8M8FH7cL4LtBnEVtLG/YQzru6ElJgriXlt24S4lXTf3PwOFINJAB+xSJQLv+TtUQfQjIHnyxCKNeKSnu5T+LQTN1uqqKW3e4Ht+GkiJnZxkSpVjiAr7ddPW5lziPFoFg2i/E2Hl/eSNoiVTHLjWjgytvzwvlSiwMJdWeuWI/VIQ3BAaqNGJ7o1QhZjAnvRp6VfYV6mnku7IDwXQm4LirVsGpRZNP41wCQXCtVtfgQqTp6TkAD8Ele4+JOnYh5JnFlekj4biGxIWggg8caf8Sz/5sXXXKeDOaHuzlaqQiWyAUvxBY1G1ZZoHlkp1OkOs6HY+o9wEbxXGXHnFWS1HsxFYhk21vcCFs3zhhtPaG5vDtSy5oFHofmt+qcFvJY6gqAkzqJfBPdvH4b+lwEVr+e886PUwm1XlEKVwrK9F69tlRSHtRqK/qFPXKQRYLkvS6tJRwR5h8mgTsFS3k5+Bi+3VUzLpreW4ORvortv1haKtZbjS2ULsplyAKIeSs23ShKudRXTChocSk4cl8Ui9aX7/01jglH/EZaR/InkfrzcQifS6xTvxoL9Y9ccNPMZLVD2rDcu0KlwcDj22hMe/c8JAP2zyzrP9ky+rAJbNvyEkBV9CDNDoVvGZyUfg0cR9AXR1DCNUS4ywv5YmcwOpBGHfoZ7nnkv27Uy9aN+rAbUOY/rc5HwCf59t8x4XcdlUSLxlXQQZIdp2euIkTy6gez3u0dxI7ND/fhsgp3mXJJkSlz+xtH0uI4uQ+PQO+5TFYYj+8LjQoH2aB4UINh0bQFIJJFjJJykxcrPqvju+MbHpTj/5KWZ8CrvmoVJcMOuC8ORl63NgX8LyKY+cIwFWU2N4KYnQrli5s34rwXXgSwZt5l1ZWnf4GR/Ux6gfYgftxQO8T+SmvHc5ics2pxYYu0iH1gtXKLNVzBuq+MhDRREEfv/e/tGpFLf3loFJYV8JCfhdnGI1yIgqCd9RT0XjF+xaFkjowVpAwEJ3YlXryzm0yVq/aQQR6PNQdVFChKOUPOZk28Ihz1bwihn6mhi/C4f/Cb3N2SMBmkO5pIyVyrpQKI5b9WNZGkVB9X78FE3bh909kML5SLX9QdrSVtcTpoeLCoMLhnAb1ElV6r5XXlGGNbEqFn9+YXf9ytDYr0QgD3d2Q2SPLe0/w/PADkfpYjUC6hGSAZstXY8yEwvgULZyndabIqWvH0xgUtF00lFPh2ntyjvvybHwshOjeKOTAQCRhK7zG/eo6IXpW443B/R+9pT7PM/JibdKbgTEwIfDU6IbUGKJab8KzoZKKe+yauzOO9v9h3AGRb2AT2gpYSYFPGcS1tIbIv12b9sNb2UC+32c8VKWZBwvNaNUeII/njXUteJPHYN157HDBCrpY+9V+lt8DOhWxlUKy1uKymh6EC6luA8CbfAv0Fah/O5ysJDnICATnLtn0C3yN/2edSiNju7FAtuvidMawm9WeDo+XfLdJOpLOv2CiGWJC5COMnvqORwX5M/oba26TsAnarlN1aExCBJU2RnFRY8undpct1sByTNAH/PTCa9SeSsUaWBIplPDrOTTceeJbo2nKWEym0ce1r7wS10b8PqCn80GASKEkrxRcvxHK9LzNxHc0Wqq8Bz/zfKoxCtXxqbNt1VtN2L9nlUYrdWLD5j8KucHDWj/EvXadOXG3/2TMBnKGEUoJV0FJJQk96AuFx7JRPSPpyUkn73kXiSKcxlDIBzQHQ3FzsAI3K3uJGrFXrI07s6Fy6p9+X96vguvTNS3BwK/u8+iYfzcocgUU4OLFmRmPKrM/7gNjYDdX2vTF8xswrNT0o9bgYA1XV55IwuyHEyxgdX1REn7Sq7uknKwiQNUliGZ84a4VX2isIZ8AKsHoTXwukiDkbSW+0FLzChf8QQrhXOuWa0n2D88K+gjMlB1oVN08F2Lsr+j5AKAF6a0tBzkUcgAAA=";
 document.querySelectorAll('[data-service-example]').forEach(img=>{
-  const src=img.dataset.serviceExample==='antes'?servicePhotoBefore:servicePhotoAfter;
-  if(src) img.src=src;
+  img.src=img.dataset.serviceExample==='antes'?serviceImageDesign:serviceImageVolume;
 });
 const customServiceWrap=document.getElementById('customServiceWrap');
 const customServiceText=document.getElementById('customServiceText');
