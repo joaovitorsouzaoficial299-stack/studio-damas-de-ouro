@@ -370,6 +370,16 @@ main > section.hero::after{height:150px!important}
   .site-header .brand-name{font-size:19px}
   .site-header a.brand{gap:7px!important}
 }
+</style><style id="time-picker-studio">
+.times-example-note{font-size:13px;line-height:1.65;color:#d2b98f;background:rgba(214,178,122,.075);border:1px solid rgba(214,178,122,.19);padding:12px 14px;border-radius:14px;margin:10px 0 22px}
+.time-period{display:block;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#d4b782;margin:18px 0 10px}
+.time-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.time-option{display:flex;align-items:center;justify-content:center;padding:12px 8px;min-height:52px;border-radius:15px;border:1px solid rgba(229,195,139,.32);background:rgba(255,255,255,.055);color:#f7eede;font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;cursor:pointer;backdrop-filter:blur(15px) saturate(1.4);-webkit-backdrop-filter:blur(15px) saturate(1.4);box-shadow:inset 0 1px rgba(255,255,255,.10);transition:background .2s,border-color .2s,transform .2s}
+.time-option:hover{border-color:rgba(226,184,111,.75);transform:translateY(-1px)}
+.time-option.selected{color:#1b140c;background:linear-gradient(125deg,#c69c5f,#ead0a3);border-color:#efd5a8;box-shadow:0 8px 28px rgba(205,164,100,.18)}
+.time-option:focus-visible{outline:2px solid #ecd1a3;outline-offset:3px}
+@media(max-width:400px){.time-grid{gap:8px}.time-option{font-size:14px;padding:10px 5px}}
+@media(prefers-reduced-motion:reduce){.time-option{transition:none}}
 </style></head>
 <body>
   <header class="site-header">
@@ -501,7 +511,24 @@ main > section.hero::after{height:150px!important}
           <div class="flow-stage" data-step="3">
             <h3 class="flow-question">Qual horário você prefere?</h3>
             <p class="flow-description">Escolha um horário que funcione para você.</p>
-            <input class="field" id="hora" type="time">
+            <div class="times-example-note">Horários para consulta — a disponibilidade será confirmada pelo estúdio.</div>
+            <div class="time-options" id="timeOptions" role="group" aria-label="Escolha um horário desejado">
+              <span class="time-period">Manhã</span>
+              <div class="time-grid">
+                <button class="time-option" type="button" data-time="08:00" aria-pressed="false">08:00</button>
+                <button class="time-option" type="button" data-time="09:00" aria-pressed="false">09:00</button>
+                <button class="time-option" type="button" data-time="10:00" aria-pressed="false">10:00</button>
+                <button class="time-option" type="button" data-time="11:00" aria-pressed="false">11:00</button>
+              </div>
+              <span class="time-period">Tarde</span>
+              <div class="time-grid">
+                <button class="time-option" type="button" data-time="13:00" aria-pressed="false">13:00</button>
+                <button class="time-option" type="button" data-time="14:00" aria-pressed="false">14:00</button>
+                <button class="time-option" type="button" data-time="15:00" aria-pressed="false">15:00</button>
+                <button class="time-option" type="button" data-time="16:00" aria-pressed="false">16:00</button>
+                <button class="time-option" type="button" data-time="17:00" aria-pressed="false">17:00</button>
+              </div>
+            </div>
             <div class="flow-actions">
               <button class="mini-btn" type="button" data-back>Voltar</button>
               <button class="cta" type="button" id="nextHora">Continuar</button>
@@ -667,10 +694,24 @@ const customServiceText=document.getElementById('customServiceText');
       showStep(3);
     });
 
+    document.querySelectorAll('.time-option').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.time-option').forEach(option => {
+          option.classList.remove('selected');
+          option.setAttribute('aria-pressed', 'false');
+        });
+        button.classList.add('selected');
+        button.setAttribute('aria-pressed', 'true');
+        state.hora = button.dataset.time;
+        updateSummary();
+      });
+    });
+
     document.getElementById('nextHora').addEventListener('click', () => {
-      const value = document.getElementById('hora').value;
-      if (!value) { document.getElementById('hora').focus(); return; }
-      state.hora = value;
+      if (!state.hora) {
+        document.getElementById('timeOptions').focus?.();
+        return;
+      }
       showStep(4);
     });
 
